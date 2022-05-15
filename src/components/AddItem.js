@@ -23,6 +23,7 @@ export const AddItem = ({ addItem }) => {
     <form onSubmit={handleSubmit}>     
         <input
           className="input"
+          placeholder="enter a new task"
           type="text"
           value={item}
           onChange={e => setItem(e.target.value)}
