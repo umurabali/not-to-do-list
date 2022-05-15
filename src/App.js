@@ -1,27 +1,33 @@
-import React, {useEffect, useState} from "react";
-import logo from './logo.svg';
+import React, { useEffect, useState } from "react";
+import { AddItem } from './components/AddItem'
+import { NotToDoList } from './components/NotToDoList'
 import './App.css';
 
 function App() {
 
-  const [notToDoItems, setNotToDoItems] = useState([])
+  const [notToDoItems, setNotToDoItems] = useState([]);
+
+  const addItem = (item) => {
+    setNotToDoItems((items) => { 
+      return [item, ...items]
+    })
+  }
+
+  const handleToDoComplete = (id) => {
+   
+    let mapped = notToDoItems.map(task => {
+      return task.id == id ? { ...task, isCompleted: !task.isCompleted } : { ...task};
+    });
+    setNotToDoItems(mapped.sort((a,b) => a.isCompleted - b.isCompleted));
+  }
 
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1 className="App-header">NOT TO DO LIST</h1>
+      <div className="todos">
+        <AddItem addItem={addItem} />
+        <NotToDoList itemList={notToDoItems} handleToDoComplete={handleToDoComplete} />
+      </div>
     </div>
   );
 }
